@@ -6,7 +6,8 @@ window.AI_LEARNING_HUB = {
     { id: "skills", label: "技能資料庫", shortcut: "04" },
     { id: "projects", label: "實作作品", shortcut: "05" },
     { id: "workflow", label: "學習流程", shortcut: "06" },
-    { id: "maintain", label: "維護規則", shortcut: "07" }
+    { id: "maintain", label: "維護規則", shortcut: "07" },
+    { id: "editor", label: "我的內容", shortcut: "08" }
   ],
   modules: [
     {

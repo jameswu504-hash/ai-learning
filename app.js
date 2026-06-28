@@ -1,6 +1,7 @@
 (function () {
   const data = window.AI_LEARNING_HUB;
   const storageKey = "ai-skill-learning-hub-v2";
+  const customContentKey = "ai-skill-learning-hub-custom-content-v1";
   const state = {
     view: "overview",
     phase: "week-1",
@@ -8,7 +9,8 @@
     module: "all",
     level: "all",
     status: "all",
-    progress: loadProgress()
+    progress: loadProgress(),
+    customItems: loadCustomItems()
   };
 
   const $ = (selector) => document.querySelector(selector);
@@ -20,6 +22,18 @@
     } catch {
       return {};
     }
+  }
+
+  function loadCustomItems() {
+    try {
+      return JSON.parse(localStorage.getItem(customContentKey)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveCustomItems() {
+    localStorage.setItem(customContentKey, JSON.stringify(state.customItems));
   }
 
   function saveProgress() {
@@ -54,6 +68,22 @@
     return { done, total: ids.length, ratio: ids.length ? Math.round((done / ids.length) * 100) : 0 };
   }
 
+  function addCustomItem(item) {
+    state.customItems.unshift({
+      id: `custom-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      ...item
+    });
+    saveCustomItems();
+    renderAll();
+  }
+
+  function deleteCustomItem(id) {
+    state.customItems = state.customItems.filter((item) => item.id !== id);
+    saveCustomItems();
+    renderAll();
+  }
+
   function matchesQuery(text) {
     const query = state.query.trim().toLowerCase();
     return !query || text.toLowerCase().includes(query);
@@ -83,7 +113,7 @@
       { label: "總進度", value: `${progress.ratio}%`, note: `${progress.done} / ${progress.total} 個學習項目完成` },
       { label: "知識主軸", value: data.modules.length, note: "從底層到 AI PM" },
       { label: "技能完成", value: `${doneSkills}/${data.skills.length}`, note: "用勾選追蹤" },
-      { label: "作品完成", value: `${doneProjects}/${data.projects.length}`, note: "用輸出物驗證學會" }
+      { label: "我的內容", value: state.customItems.length, note: "存在這台瀏覽器，可匯出備份" }
     ];
     $("#metricsGrid").innerHTML = metrics.map((metric) => `
       <article class="metric">
@@ -239,6 +269,36 @@
     $("#maintenanceGrid").innerHTML = data.maintenance.map((item) => `<article class="card"><h3>${item.title}</h3><p>${item.note}</p></article>`).join("");
   }
 
+  function renderEditor() {
+    const list = $("#customContentList");
+    if (!list) return;
+    list.innerHTML = state.customItems.map((item) => `
+      <article class="custom-item">
+        <div>
+          <span class="chip ${chipClass(item.module)}">${moduleName(item.module)}</span>
+          <span class="chip">${typeLabel(item.type)}</span>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.body)}</p>
+          <small>${new Date(item.createdAt).toLocaleString("zh-TW")}</small>
+        </div>
+        <button class="text-button danger-button" type="button" data-delete-custom="${item.id}">刪除</button>
+      </article>
+    `).join("") || `<div class="empty">還沒有自己的內容。先新增一則筆記，例如「CUDA 生態是什麼」。</div>`;
+  }
+
+  function typeLabel(type) {
+    return { note: "筆記", skill: "技能", resource: "資源", project: "作品" }[type] || type;
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
   function bindEvents() {
     document.body.addEventListener("click", (event) => {
       const viewTarget = event.target.closest("[data-view-target]");
@@ -253,6 +313,9 @@
       }
       const workflowButton = event.target.closest("[data-toggle-workflow]");
       if (workflowButton) workflowButton.closest(".workflow-item").classList.toggle("open");
+
+      const deleteButton = event.target.closest("[data-delete-custom]");
+      if (deleteButton) deleteCustomItem(deleteButton.dataset.deleteCustom);
     });
 
     document.body.addEventListener("change", (event) => {
@@ -287,6 +350,36 @@
       saveProgress();
       renderAll();
     });
+
+    $("#contentForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      addCustomItem({
+        type: $("#contentType").value,
+        module: $("#contentModule").value,
+        title: $("#contentTitle").value.trim(),
+        body: $("#contentBody").value.trim()
+      });
+      event.target.reset();
+    });
+
+    $("#exportContent").addEventListener("click", () => {
+      $("#exportBox").value = JSON.stringify({ version: 1, items: state.customItems }, null, 2);
+      $("#exportBox").select();
+    });
+
+    $("#importContent").addEventListener("click", () => {
+      try {
+        const parsed = JSON.parse($("#importBox").value);
+        const items = Array.isArray(parsed) ? parsed : parsed.items;
+        if (!Array.isArray(items)) throw new Error("Invalid backup");
+        state.customItems = items;
+        saveCustomItems();
+        $("#importBox").value = "";
+        renderAll();
+      } catch {
+        alert("匯入失敗：請確認貼上的是這個網站匯出的 JSON。");
+      }
+    });
   }
 
   function renderAll() {
@@ -303,6 +396,7 @@
     renderProjects();
     renderWorkflow();
     renderMaintenance();
+    renderEditor();
     $("#searchInput").value = state.query;
   }
 

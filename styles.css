@@ -78,6 +78,18 @@ h3 { margin-bottom: 8px; font-size: 15px; }
   min-height: 36px; border: 1px solid var(--line); border-radius: 8px;
   background: var(--panel); color: #3c443f; padding: 0 12px; font-weight: 650;
 }
+.primary-button {
+  min-height: 40px;
+  border: 1px solid #286b4e;
+  border-radius: 8px;
+  background: var(--green);
+  color: #fff;
+  padding: 0 14px;
+  font-weight: 750;
+}
+.danger-button {
+  color: var(--coral);
+}
 .artifact-link {
   min-height: 36px;
   display: inline-flex;
@@ -154,6 +166,61 @@ input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-colo
 .workflow-detail { display: none; border-top: 1px solid var(--line); padding: 12px 14px 14px; }
 .workflow-item.open .workflow-detail { display: block; }
 .empty { padding: 24px; color: var(--muted); text-align: center; }
+.editor-form, .backup-tools {
+  display: grid;
+  gap: 12px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.editor-form label, .backup-tools label {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+.editor-form input, .editor-form select, .editor-form textarea, .backup-tools textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  padding: 10px 12px;
+  outline: 0;
+}
+.editor-form textarea, .backup-tools textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+.custom-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+.custom-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fdfdfb;
+  padding: 14px;
+}
+.custom-item h3 {
+  margin: 8px 0 6px;
+}
+.custom-item small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.backup-tools p {
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: 13px;
+}
 @media (max-width: 1180px) {
   .module-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -165,7 +232,7 @@ input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-colo
 }
 @media (max-width: 760px) {
   .main { padding: 14px; }
-  .topbar, .command-strip, .panel-heading, .skill-record, .project-card, .output-row, .module-strip { display: grid; grid-template-columns: 1fr; }
+  .topbar, .command-strip, .panel-heading, .skill-record, .project-card, .output-row, .module-strip, .form-row, .custom-item { display: grid; grid-template-columns: 1fr; }
   .search { width: 100%; }
   .nav-list { grid-template-columns: 1fr 1fr; }
   h1 { font-size: 22px; }

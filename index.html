@@ -187,6 +187,67 @@
             <div class="maintenance-grid" id="maintenanceGrid"></div>
           </section>
         </section>
+
+        <section class="view" data-view="editor">
+          <div class="content-grid">
+            <section class="panel wide">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Personal content</span>
+                  <h2>自己新增 AI 筆記、技能、資源與作品</h2>
+                </div>
+              </div>
+              <form class="editor-form" id="contentForm">
+                <div class="form-row">
+                  <label>
+                    <span>類型</span>
+                    <select id="contentType">
+                      <option value="note">筆記</option>
+                      <option value="skill">技能</option>
+                      <option value="resource">資源</option>
+                      <option value="project">作品</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>主軸</span>
+                    <select id="contentModule">
+                      <option value="industry">AI 產業鏈</option>
+                      <option value="agent">Agent</option>
+                      <option value="rag">RAG / 記憶</option>
+                      <option value="skills">Agent Skills</option>
+                      <option value="pm">AI PM</option>
+                    </select>
+                  </label>
+                </div>
+                <label>
+                  <span>標題</span>
+                  <input id="contentTitle" type="text" placeholder="例如：CUDA 生態是什麼" required />
+                </label>
+                <label>
+                  <span>內容</span>
+                  <textarea id="contentBody" rows="6" placeholder="寫下你的理解、例子、來源、下一步要做什麼..." required></textarea>
+                </label>
+                <button class="primary-button" type="submit">儲存到我的網站</button>
+              </form>
+              <div class="custom-list" id="customContentList"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Backup</span>
+                  <h2>備份與匯入</h2>
+                </div>
+              </div>
+              <div class="backup-tools">
+                <p>現在的新增內容會存在這台電腦的瀏覽器裡。要換電腦或正式更新網站時，先匯出 JSON 備份。</p>
+                <button class="text-button" id="exportContent" type="button">產生備份 JSON</button>
+                <textarea id="exportBox" rows="7" readonly placeholder="按上方按鈕後，這裡會出現備份資料。"></textarea>
+                <textarea id="importBox" rows="7" placeholder="把之前匯出的 JSON 貼到這裡，再按匯入。"></textarea>
+                <button class="text-button" id="importContent" type="button">匯入備份</button>
+              </div>
+            </section>
+          </div>
+        </section>
       </main>
     </div>
     <script src="./data.js"></script>
