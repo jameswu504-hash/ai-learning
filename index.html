@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Skill Learning Hub</title>
+    <meta name="description" content="一個用來系統化學習 AI 產業鏈、Agent、RAG、Agent Skills 與 AI PM 的互動知識網站。" />
+    <meta name="theme-color" content="#f7f8f6" />
+    <meta property="og:title" content="AI Skill Learning Hub" />
+    <meta property="og:description" content="AI 學習路線、知識地圖、技能資料庫、實作任務與進度追蹤。" />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="workspace-mark">
+          <div class="logo">AI</div>
+          <div>
+            <strong>AI Skill Hub</strong>
+            <span>Learning operating system</span>
+          </div>
+        </div>
+        <nav class="nav-list" id="navList"></nav>
+        <div class="sidebar-panel">
+          <span>Learning progress</span>
+          <strong id="sidebarFocus">先建立 AI 全景</strong>
+          <div class="mini-progress">
+            <span id="progressText">0%</span>
+            <div><i id="progressBar"></i></div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Personal AI curriculum</span>
+            <h1>把 AI 學習變成一套可執行的系統</h1>
+            <p class="subtitle">從產業鏈、模型底層、Agent、RAG、Agent Skills 到 AI PM，整理成路線、技能、任務與作品。</p>
+          </div>
+          <div class="command-strip">
+            <a class="artifact-link" href="./artifacts/week-1-2-ai-overview.html">Week 1-2 成果</a>
+            <label class="search">
+              <span>Search</span>
+              <input id="searchInput" type="search" placeholder="搜尋 Agent、RAG、MCP、AI PM..." />
+            </label>
+            <button id="resetProgress" type="button">Reset</button>
+          </div>
+        </header>
+
+        <section class="view active" data-view="overview">
+          <div class="metrics-grid" id="metricsGrid"></div>
+          <div class="content-grid">
+            <section class="panel wide">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Next step</span>
+                  <h2>本週要完成的學習任務</h2>
+                </div>
+                <div class="segmented" id="phaseSwitch"></div>
+              </div>
+              <div id="activePhase"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Outcome</span>
+                  <h2>學完應該產出的東西</h2>
+                </div>
+              </div>
+              <div class="stack" id="outcomeList"></div>
+            </section>
+          </div>
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">AI map</span>
+                <h2>五大知識主軸</h2>
+              </div>
+              <button class="text-button" type="button" data-view-target="map">打開知識地圖</button>
+            </div>
+            <div class="module-strip" id="moduleStrip"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view="map">
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Knowledge map</span>
+                <h2>AI 知識地圖</h2>
+              </div>
+            </div>
+            <div class="module-grid" id="moduleGrid"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view="roadmap">
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">10-week roadmap</span>
+                <h2>十週學習路線</h2>
+              </div>
+            </div>
+            <div class="roadmap-board" id="roadmapBoard"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view="skills">
+          <section class="panel">
+            <div class="panel-heading stacked">
+              <div>
+                <span class="section-kicker">Skill database</span>
+                <h2>技能資料庫</h2>
+              </div>
+              <div class="filters">
+                <select id="moduleFilter" aria-label="主軸篩選"></select>
+                <select id="levelFilter" aria-label="難度篩選"></select>
+                <select id="statusFilter" aria-label="狀態篩選">
+                  <option value="all">全部狀態</option>
+                  <option value="todo">未開始</option>
+                  <option value="doing">進行中</option>
+                  <option value="done">已完成</option>
+                </select>
+              </div>
+            </div>
+            <div class="skill-database" id="skillDatabase"></div>
+          </section>
+        </section>
+
+        <section class="view" data-view="projects">
+          <div class="content-grid">
+            <section class="panel wide">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Portfolio</span>
+                  <h2>用作品確認你真的學會</h2>
+                </div>
+              </div>
+              <div class="project-list" id="projectList"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Definition of learned</span>
+                  <h2>學會的標準</h2>
+                </div>
+              </div>
+              <div class="stack" id="doneList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" data-view="workflow">
+          <div class="content-grid">
+            <section class="panel wide">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Study loop</span>
+                  <h2>每學一個 AI 主題，都照這個流程</h2>
+                </div>
+              </div>
+              <div class="workflow-list" id="workflowList"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">Inbox</span>
+                  <h2>待整理素材</h2>
+                </div>
+              </div>
+              <div class="stack" id="inboxList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" data-view="maintain">
+          <section class="panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">Maintain</span>
+                <h2>讓這個 AI 學習網站長期不變亂</h2>
+              </div>
+            </div>
+            <div class="maintenance-grid" id="maintenanceGrid"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

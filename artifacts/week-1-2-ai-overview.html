@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Week 1-2 - AI 全景學習成果</title>
+    <style>
+      :root {
+        --bg: #f7f8f6;
+        --panel: #ffffff;
+        --soft: #eef3ee;
+        --line: #dfe4df;
+        --text: #202321;
+        --muted: #68736c;
+        --green: #2f7d5c;
+        --green-soft: #e1f0e8;
+        --blue: #466d94;
+        --blue-soft: #e2edf5;
+        --amber: #9d7131;
+        --amber-soft: #f3ead8;
+        --coral: #c76650;
+        --coral-soft: #f6e6e0;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+        letter-spacing: 0;
+      }
+      main {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 56px;
+      }
+      header {
+        display: grid;
+        gap: 14px;
+        padding: 18px 0 22px;
+      }
+      .eyebrow {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      h1, h2, h3, p { margin-top: 0; }
+      h1 {
+        margin-bottom: 0;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+      h2 {
+        margin-bottom: 14px;
+        font-size: 22px;
+        line-height: 1.25;
+      }
+      h3 {
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+      p, li {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+      a { color: var(--green); font-weight: 700; }
+      .subtitle {
+        max-width: 820px;
+        margin: 0;
+        font-size: 16px;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: var(--soft);
+        color: #455049;
+        font-size: 12px;
+        font-weight: 750;
+      }
+      .chip.green { background: var(--green-soft); color: var(--green); }
+      .chip.blue { background: var(--blue-soft); color: var(--blue); }
+      .chip.amber { background: var(--amber-soft); color: var(--amber); }
+      .chip.coral { background: var(--coral-soft); color: var(--coral); }
+      .panel, .card, .layer, .term-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: 0 18px 60px rgba(33, 38, 34, 0.08);
+      }
+      .panel {
+        padding: 18px;
+        margin-top: 16px;
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+        gap: 16px;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .industry-map {
+        display: grid;
+        gap: 10px;
+      }
+      .layer {
+        display: grid;
+        grid-template-columns: 132px minmax(0, 1fr) minmax(180px, .55fr);
+        gap: 14px;
+        padding: 14px;
+        box-shadow: none;
+        background: #fdfdfb;
+      }
+      .layer strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .layer p {
+        margin-bottom: 0;
+      }
+      .layer .role {
+        font-size: 13px;
+        color: var(--text);
+        font-weight: 650;
+      }
+      .flow {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .flow div {
+        min-height: 74px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fdfdfb;
+        padding: 12px;
+      }
+      .flow strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+      .card {
+        padding: 14px;
+        box-shadow: none;
+        background: #fdfdfb;
+      }
+      .formula {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfa;
+        padding: 14px;
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        color: #314139;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+      th, td {
+        border-bottom: 1px solid var(--line);
+        padding: 12px 10px;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        color: var(--muted);
+        font-size: 12px;
+        background: #fafbf9;
+      }
+      .term-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .term-card {
+        padding: 12px;
+        box-shadow: none;
+        background: #fdfdfb;
+      }
+      .term-card strong {
+        display: block;
+        margin: 8px 0 6px;
+        font-size: 14px;
+      }
+      .term-card p {
+        margin-bottom: 0;
+        font-size: 13px;
+      }
+      .checklist {
+        display: grid;
+        gap: 8px;
+      }
+      .checklist label {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fdfdfb;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        margin-top: 2px;
+        accent-color: var(--green);
+      }
+      @media (max-width: 980px) {
+        .grid-2, .grid-3, .flow, .term-grid, .layer {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="eyebrow">Week 1-2 output</span>
+        <h1>建立 AI 全景</h1>
+        <p class="subtitle">這份成果把 Week 1-2 的任務做成可讀、可複習、可放回網站的學習材料：AI 產業鏈一頁圖、Token / Embedding 解釋卡、20 個核心名詞表，以及訓練、推理、微調差異表。</p>
+        <div class="toolbar">
+          <a class="chip green" href="../index.html">回到 AI Skill Hub</a>
+          <span class="chip blue">AI 產業鏈</span>
+          <span class="chip amber">Token / Embedding</span>
+          <span class="chip coral">模型生命週期</span>
+        </div>
+      </header>
+
+      <section class="panel">
+        <h2>一、AI 產業鏈一頁圖</h2>
+        <p>AI 不是只有模型。真正的 AI 系統是一條從物理能源到使用者應用的長鏈，每一層都會影響成本、速度、能力與商業模式。</p>
+        <div class="industry-map">
+          <article class="layer">
+            <div><span class="chip green">01</span><strong>能源層</strong></div>
+            <div>
+              <p class="role">AI 的物理極限：電力、冷卻、穩定供應。</p>
+              <p>大型資料中心需要巨量電力與散熱，能源成本會直接影響訓練與推理成本。</p>
+            </div>
+            <p><strong>你要懂：</strong>AI 不是純軟體，它受限於電力、散熱與基礎建設。</p>
+          </article>
+          <article class="layer">
+            <div><span class="chip green">02</span><strong>晶片層</strong></div>
+            <div>
+              <p class="role">AI 的發動機：GPU、加速器、CUDA 生態。</p>
+              <p>CPU 擅長複雜邏輯與循序處理，GPU 擅長平行矩陣運算，因此特別適合深度學習。</p>
+            </div>
+            <p><strong>你要懂：</strong>NVIDIA 的強不只在晶片，也在 CUDA 開發者生態。</p>
+          </article>
+          <article class="layer">
+            <div><span class="chip green">03</span><strong>Infra 層</strong></div>
+            <div>
+              <p class="role">AI 的身體：雲端、資料中心、儲存、網路與萬卡叢集。</p>
+              <p>這一層負責把大量 GPU、網路、儲存與任務排程整合起來，讓模型能被訓練與部署。</p>
+            </div>
+            <p><strong>你要懂：</strong>真正困難的是把大量算力穩定、低延遲、高效率地組織起來。</p>
+          </article>
+          <article class="layer">
+            <div><span class="chip green">04</span><strong>模型層</strong></div>
+            <div>
+              <p class="role">AI 的大腦：訓練、推理、微調、對齊與評估。</p>
+              <p>模型先透過大量資料訓練出通用能力，再透過推理服務使用者，也可用微調適配特定任務。</p>
+            </div>
+            <p><strong>你要懂：</strong>訓練是養成能力，推理是實際幹活，微調是讓模型更貼近特定場景。</p>
+          </article>
+          <article class="layer">
+            <div><span class="chip green">05</span><strong>應用層</strong></div>
+            <div>
+              <p class="role">AI 與世界互動的窗口：產品、API、工作流與使用者介面。</p>
+              <p>應用可以是既有產品加入 AI，也可以是從大模型能力重新設計的 AI-native 產品。</p>
+            </div>
+            <p><strong>你要懂：</strong>Token 與 API 是應用層使用模型能力時最常見的計量與連接方式。</p>
+          </article>
+        </div>
+
+        <div class="flow">
+          <div><strong>能源</strong><p>供電與散熱</p></div>
+          <div><strong>晶片</strong><p>平行運算</p></div>
+          <div><strong>Infra</strong><p>組織算力</p></div>
+          <div><strong>模型</strong><p>理解與生成</p></div>
+          <div><strong>應用</strong><p>解決問題</p></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>二、Token / Embedding 解釋卡</h2>
+        <div class="grid-2">
+          <article class="card">
+            <span class="chip blue">Token</span>
+            <h3>Token 是模型讀文字的最小工作單位</h3>
+            <p>模型不直接理解人類文字，而是先透過 Tokenizer 把文字切成片段，再轉成數字 ID。英文可能以字、詞根或片段切分；中文可能是一個字、詞或更細的片段。</p>
+            <div class="formula">「我想學 AI」 -> ["我", "想", "學", " AI"] -> [token_id_1, token_id_2, token_id_3, token_id_4]</div>
+            <p><strong>重點：</strong>Token 影響成本、上下文長度、處理速度與多語言效率。</p>
+          </article>
+          <article class="card">
+            <span class="chip amber">Embedding</span>
+            <h3>Embedding 是把文字放進語意空間</h3>
+            <p>Embedding 會把文字、句子或文件轉成一串向量數字。語意越接近，向量距離通常越近；語意越遠，距離通常越遠。</p>
+            <div class="formula">Embedding("貓") ≈ Embedding("狗")<br />Embedding("貓") 與 Embedding("發票") 距離較遠</div>
+            <p><strong>重點：</strong>Embedding 是 RAG、語意搜尋、推薦、聚類與相似度比對的基礎。</p>
+          </article>
+        </div>
+
+        <div class="grid-3" style="margin-top: 12px;">
+          <article class="card">
+            <h3>One-hot 的問題</h3>
+            <p>One-hot 只知道「是不是同一個詞」，不知道語意接近。例如貓和狗在 one-hot 中可能完全垂直，無法表達牠們都屬於動物。</p>
+          </article>
+          <article class="card">
+            <h3>稠密向量的價值</h3>
+            <p>Embedding 用較少維度承載語意關係，能讓模型知道「貓、狗、寵物」比「貓、發票、伺服器」更接近。</p>
+          </article>
+          <article class="card">
+            <h3>多模態的方向</h3>
+            <p>現代模型會把文字、圖片、音訊放進可對齊的表示空間，讓模型能理解不同媒介之間的關係。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>三、訓練、推理、微調差異表</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>概念</th>
+              <th>它在做什麼</th>
+              <th>像什麼</th>
+              <th>成本特性</th>
+              <th>你要判斷的事</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>訓練 Training</strong></td>
+              <td>用大量資料讓模型學會語言、知識、模式與推理能力。</td>
+              <td>培養一個通才大腦。</td>
+              <td>極高成本，需要大量 GPU、資料、電力與時間。</td>
+              <td>通常不是個人或一般公司從零做，除非有巨大資源。</td>
+            </tr>
+            <tr>
+              <td><strong>推理 Inference</strong></td>
+              <td>使用已訓練好的模型回答問題、生成內容或執行任務。</td>
+              <td>讓大腦實際工作。</td>
+              <td>每次使用都會產生成本，常以 token、延遲、吞吐量計算。</td>
+              <td>產品體驗會受速度、穩定性、成本與輸出品質影響。</td>
+            </tr>
+            <tr>
+              <td><strong>微調 Fine-tuning</strong></td>
+              <td>用特定資料讓通用模型更適合某個領域、格式、語氣或任務。</td>
+              <td>把通才訓練成專科助理。</td>
+              <td>比從零訓練便宜，但仍需要乾淨資料與評估。</td>
+              <td>不是所有問題都要微調；很多場景可先用提示詞、RAG 或工具解決。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel">
+        <h2>四、20 個核心名詞表</h2>
+        <div class="term-grid">
+          <article class="term-card"><span class="chip">01</span><strong>AI</strong><p>讓機器執行需要人類智慧的任務，例如理解、生成、判斷與規劃。</p></article>
+          <article class="term-card"><span class="chip">02</span><strong>LLM</strong><p>大型語言模型，透過大量文字與資料學習語言模式並生成回應。</p></article>
+          <article class="term-card"><span class="chip">03</span><strong>Token</strong><p>模型處理文字的基本單位，可能是字、詞或文字片段。</p></article>
+          <article class="term-card"><span class="chip">04</span><strong>Tokenizer</strong><p>把文字切成 Token 並轉成模型可處理數字 ID 的工具。</p></article>
+          <article class="term-card"><span class="chip">05</span><strong>Embedding</strong><p>把文字、句子、文件轉成向量，用距離表示語意相似度。</p></article>
+          <article class="term-card"><span class="chip">06</span><strong>向量資料庫</strong><p>儲存 Embedding，支援用語意相似度快速找相關內容。</p></article>
+          <article class="term-card"><span class="chip">07</span><strong>訓練</strong><p>用大量資料更新模型參數，讓模型形成通用能力。</p></article>
+          <article class="term-card"><span class="chip">08</span><strong>推理</strong><p>使用訓練好的模型處理輸入並產生輸出。</p></article>
+          <article class="term-card"><span class="chip">09</span><strong>微調</strong><p>用特定資料讓模型更適合特定領域、格式或任務。</p></article>
+          <article class="term-card"><span class="chip">10</span><strong>參數</strong><p>模型內部的權重數值，承載模型學到的模式。</p></article>
+          <article class="term-card"><span class="chip">11</span><strong>GPU</strong><p>擅長平行運算的處理器，適合深度學習中的矩陣計算。</p></article>
+          <article class="term-card"><span class="chip">12</span><strong>CUDA</strong><p>NVIDIA 的 GPU 軟體開發生態，讓開發者能有效使用 GPU 算力。</p></article>
+          <article class="term-card"><span class="chip">13</span><strong>資料中心</strong><p>集中放置伺服器、GPU、儲存與網路設備的基礎設施。</p></article>
+          <article class="term-card"><span class="chip">14</span><strong>API</strong><p>應用程式呼叫模型或服務的介面，是 AI 能力接到產品的橋樑。</p></article>
+          <article class="term-card"><span class="chip">15</span><strong>上下文</strong><p>模型在一次對話或任務中可參考的輸入資訊範圍。</p></article>
+          <article class="term-card"><span class="chip">16</span><strong>幻覺</strong><p>模型生成看似合理但不正確、無來源或編造的內容。</p></article>
+          <article class="term-card"><span class="chip">17</span><strong>RAG</strong><p>檢索增強生成，讓模型先查資料再回答，降低胡說風險。</p></article>
+          <article class="term-card"><span class="chip">18</span><strong>Chunking</strong><p>把文件切成適合檢索的知識片段，不只是機械切字數。</p></article>
+          <article class="term-card"><span class="chip">19</span><strong>AI-native</strong><p>以 AI 能力為核心重新設計業務邏輯與產品介面的產品型態。</p></article>
+          <article class="term-card"><span class="chip">20</span><strong>資料飛輪</strong><p>使用者行為與 bad case 回饋持續改善資料、模型與產品體驗的循環。</p></article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>五、你現在應該完成的檢查</h2>
+        <div class="checklist">
+          <label><input type="checkbox" />我能用自己的話說出 AI 產業鏈五層：能源、晶片、Infra、模型、應用。</label>
+          <label><input type="checkbox" />我能解釋 Token 不是中文字或英文單字的簡單等同物，而是模型的工作單位。</label>
+          <label><input type="checkbox" />我能解釋 Embedding 如何用向量距離表示語意接近程度。</label>
+          <label><input type="checkbox" />我能分清楚訓練、推理、微調的目的與成本差異。</label>
+          <label><input type="checkbox" />我已經把 20 個核心名詞至少讀過一遍，並能挑 5 個講給別人聽。</label>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
